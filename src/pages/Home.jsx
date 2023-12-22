@@ -1,9 +1,11 @@
 import Banner from "../components/Banner";
+import UserSegments from "../components/UserSegments";
 
 const Home = () => {
     return (
         <>
-            <Banner />          
+            <Banner />
+            <UserSegments />          
         </>
     );
 };
