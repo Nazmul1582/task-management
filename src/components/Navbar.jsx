@@ -45,7 +45,7 @@ const Navbar = () => {
               {navLinks}
             </ul>
           </div>
-          <a className="text-xl font-bold">ProTaskManager</a>
+          <Link to="/" className="text-xl font-bold">ProTaskManager</Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navLinks}</ul>

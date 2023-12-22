@@ -1,11 +1,8 @@
 import image from "../assets/task-management.jpg";
-import Navbar from "./Navbar";
 
 const Banner = () => {
   return (
-    <div className="min-h-screen">
-      <Navbar />
-      <div className="hero">
+      <div className="hero h-[calc(100vh-theme(space.16))]">
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 justify-center items-center">
           <div>
             <h1 className="text-5xl font-bold">
@@ -21,7 +18,6 @@ const Banner = () => {
           <img src={image} className="rounded-lg" />
         </div>
       </div>
-    </div>
   );
 };
 
