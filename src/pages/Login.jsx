@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import googleImage from "../assets/google.png";
+import githubImage from "../assets/github-logo.png";
 
 const Login = () => {
   return (
@@ -42,9 +43,13 @@ const Login = () => {
             </div>
             <div className="divider">OR</div>
             <div className="form-control">
-              <button className="btn btn-accent bg-white hover:bg-white hover:shadow-accent/30 hover:shadow-lg">
+              <button className="btn btn-accent bg-white hover:bg-white hover:shadow-accent/30 hover:shadow-lg mb-5">
                 <img className="w-10" src={googleImage} alt="google logo" />
                 Sign In with Google
+              </button>
+              <button className="btn btn-accent bg-white hover:bg-white hover:shadow-accent/30 hover:shadow-lg">
+                <img className="w-10" src={githubImage} alt="github logo" />
+                Sign In with Github
               </button>
             </div>
           </form>
