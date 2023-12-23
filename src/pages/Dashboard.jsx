@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import image from "../assets/task-management.jpg";
 import AddTask from "../components/AddTask";
+import TaskList from "../components/TaskList";
 
 const Dashboard = () => {
   return (
@@ -37,6 +38,11 @@ const Dashboard = () => {
 
         <div className="bg-gray-100 py-3 px-5 overflow-x-scroll">
           <AddTask />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 my-10">
+            <TaskList title="To Do List" />
+            <TaskList title="Ongoing List" />
+            <TaskList title="Completed List" />
+          </div>
         </div>
       </div>
     </section>
