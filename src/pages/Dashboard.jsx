@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import image from "../assets/task-management.jpg";
+import AddTask from "../components/AddTask";
 
 const Dashboard = () => {
   return (
@@ -34,8 +35,8 @@ const Dashboard = () => {
           <button className="btn btn-accent w-full">Logout</button>
         </div>
 
-        <div className="bg-gray-100 py-3 px-5">
-          <h2>Content</h2>
+        <div className="bg-gray-100 py-3 px-5 overflow-x-scroll">
+          <AddTask />
         </div>
       </div>
     </section>
