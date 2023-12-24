@@ -2,9 +2,11 @@ import { useForm } from "react-hook-form";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const AddTask = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -27,6 +29,7 @@ const AddTask = () => {
 
       if (res.data.insertedId) {
         toast.success("Task added successfully");
+        navigate("/dashboard/all-tasks")
       }
     } catch (error) {
       toast.error(error.message);
