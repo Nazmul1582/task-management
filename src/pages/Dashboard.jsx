@@ -2,25 +2,13 @@ import { Link } from "react-router-dom";
 import AddTask from "../components/AddTask";
 import TaskList from "../components/TaskList";
 import useAuth from "../hooks/useAuth";
-import { useEffect, useState } from "react";
+import useTasks from "../hooks/useTasks";
 
 const Dashboard = () => {
-  const [tasks, setTasks] = useState(null);
-  const [loading, setLoading] = useState(true);
   const { user, logout } = useAuth();
+  const [tasks, loading] = useTasks();
   const date = new Date();
   const today = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
-
-  useEffect(() => {
-    fetch(`http://localhost:5000/tasks?email=${user.email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("data", data);
-        setTasks(data);
-        setLoading(false);
-      })
-      .catch((error) => console.log(error));
-  }, [user.email]);
 
   const todo = tasks?.filter((task) => task.status === "todo");
   const ongoing = tasks?.filter((task) => task.status === "ongoing");
