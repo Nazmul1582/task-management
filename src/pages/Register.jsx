@@ -1,11 +1,23 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Register = () => {
+  const { createUser } = useAuth();
   const {register, formState: { errors }, handleSubmit} = useForm();
 
   const onSubmit = (data) => {
     console.log(data);
+    const { email, password } = data;
+    createUser(email, password)
+      .then(res => {
+        console.log("createUser", res);
+        toast.success("User has created successfully.")
+      })
+      .catch(error => {
+        toast.error(error.message)
+      })
   }
     return (
         <section className="hero min-h-screen bg-base-100 py-10">
