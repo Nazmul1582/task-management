@@ -43,7 +43,7 @@ const AuthProvider = ({ children }) => {
     <AuthContext.Provider value={authInfo}>
       {loading ? (
         <div className="flex justify-center items-center min-h-screen">
-          <span className="loading loading-bars loading-lg"></span>
+          <span className="loading loading-bars loading-lg text-accent"></span>
         </div>
       ) : (
         children
