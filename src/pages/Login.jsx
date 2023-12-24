@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const Login = () => {
-  const { login, loginWithGoogle } = useAuth();
+  const { login, loginWithGoogle, loginWithGithub } = useAuth();
   const navigate = useNavigate();
   const {
     register,
@@ -23,7 +23,7 @@ const Login = () => {
       .then(() => {
         reset();
         toast.success("User has loggin in successfully.");
-        navigate("/dashboard")
+        navigate("/dashboard");
       })
       .catch((error) => {
         reset();
@@ -34,14 +34,14 @@ const Login = () => {
   const handleSocialLogin = (social) => {
     social()
       .then(() => {
-        toast.success("Login with google has been successfull")
-        navigate('/dashboard')
+        toast.success("User loggin in successfully!");
+        navigate("/dashboard");
       })
-      .catch(error => {
-        toast.error(error.message)
-      })
-  }
-  
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
+
   return (
     <div className="hero min-h-screen bg-base-100 py-10">
       <div className="hero-content flex-col">
@@ -92,17 +92,20 @@ const Login = () => {
               <button className="btn btn-accent">Login</button>
             </div>
             <div className="divider">OR</div>
-            <div className="form-control">
-              <button onClick={() => handleSocialLogin(loginWithGoogle) } className="btn btn-accent bg-white hover:bg-white hover:shadow-accent/30 hover:shadow-lg mb-5">
-                <img className="w-10" src={googleImage} alt="google logo" />
-                Sign In with Google
-              </button>
-              <button className="btn btn-accent bg-white hover:bg-white hover:shadow-accent/30 hover:shadow-lg">
-                <img className="w-10" src={githubImage} alt="github logo" />
-                Sign In with Github
-              </button>
-            </div>
           </form>
+          <div className="flex flex-col gap-5 mb-5 -mt-5 px-8">
+            <button
+              onClick={() => handleSocialLogin(loginWithGoogle)}
+              className="btn btn-accent bg-white hover:bg-white hover:shadow-accent/30 hover:shadow-lg"
+            >
+              <img className="w-10" src={googleImage} alt="google logo" />
+              Sign In with Google
+            </button>
+            <button onClick={() => handleSocialLogin(loginWithGithub)} className="btn btn-accent bg-white hover:bg-white hover:shadow-accent/30 hover:shadow-lg">
+              <img className="w-10" src={githubImage} alt="github logo" />
+              Sign In with Github
+            </button>
+          </div>
           <p className="text-center px-5 mb-8">
             Are you new here? Please{" "}
             <Link
