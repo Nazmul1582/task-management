@@ -1,19 +1,12 @@
-import { Link } from "react-router-dom";
-import AddTask from "../components/AddTask";
-import TaskList from "../components/TaskList";
+import { Link, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import useTasks from "../hooks/useTasks";
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
-  const [tasks, loading] = useTasks();
+
   const date = new Date();
   const today = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
 
-  const todo = tasks?.filter((task) => task.status === "todo");
-  const ongoing = tasks?.filter((task) => task.status === "ongoing");
-  const completed = tasks?.filter((task) => task.status === "completed");
-  console.log(todo, ongoing, completed);
 
   return (
     <section>
@@ -35,6 +28,17 @@ const Dashboard = () => {
 
           <ul className="menu">
             <li>
+              <Link to="/dashboard">Add Task</Link>
+            </li>
+            <li>
+              <Link to="/dashboard/all-tasks">All Task</Link>
+            </li>
+          </ul>
+
+          <div className="divider"></div>
+
+          <ul className="menu">
+            <li>
               <Link to="/">Home</Link>
             </li>
             <li>
@@ -50,18 +54,7 @@ const Dashboard = () => {
         </div>
 
         <div className="bg-gray-100 py-3 px-5 overflow-x-scroll">
-          <AddTask />
-          {loading ? (
-            <div className="flex justify-center items-center h-28">
-              <span className="loading loading-lg loading-spinner text-accent"></span>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-10">
-              <TaskList title="To Do List" tasks={todo} />
-              <TaskList title="Ongoing List" tasks={ongoing} />
-              <TaskList title="Completed List" tasks={completed} />
-            </div>
-          )}
+          <Outlet />          
         </div>
       </div>
     </section>

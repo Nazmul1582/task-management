@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
-import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useLoaderData } from "react-router-dom";
 
-const AddTask = () => {
-  const { user } = useAuth();
-
+const EditTask = () => {
+    const task = useLoaderData();
+    console.log(task);
   const {
     register,
     handleSubmit,
@@ -13,19 +13,17 @@ const AddTask = () => {
     reset,
   } = useForm();
   const onSubmit = async (data) => {
-    const newTask = {
-      email: user.email,
+    const updatedTask = {
       title: data.title,
       deadline: data.deadline,
       priority: data.priority,
       message: data.message,
-      status: "todo",
     };
     try {
-      const res = await axios.post("http://localhost:5000/tasks", newTask);
+      const res = await axios.put("http://localhost:5000/tasks", updatedTask);
       reset();
 
-      if (res.data.insertedId) {
+      if (res.data.modifiedCount > 0) {
         toast.success("Task added successfully");
       }
     } catch (error) {
@@ -35,7 +33,7 @@ const AddTask = () => {
 
   return (
     <div className="border rounded-lg shadow-xl p-5">
-      <h2 className="text-center font-bold text-3xl mb-6">Add Task</h2>
+      <h2 className="text-center font-bold text-3xl mb-6">Edit Task</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="max-w-screen-md mx-auto flex flex-col gap-5 mb-10"
@@ -46,6 +44,7 @@ const AddTask = () => {
           </label>
           <input
             {...register("title", { required: true })}
+            defaultValue={task.title}
             type="text"
             placeholder="Task title"
             className="input w-full"
@@ -61,6 +60,7 @@ const AddTask = () => {
             </label>
             <input
               {...register("deadline", { required: true })}
+              defaultValue={task.deadline}
               type="date"
               placeholder="Deadline"
               className="input w-full"
@@ -75,7 +75,7 @@ const AddTask = () => {
             </label>
             <select
               {...register("priority", { required: true })}
-              defaultValue="default"
+              defaultValue={task.priority}
               className="select select-bordered w-full"
             >
               <option disabled value="default">
@@ -97,6 +97,7 @@ const AddTask = () => {
           <textarea
             {...register("message", { required: true })}
             type="text"
+            defaultValue={task.message}
             placeholder="Task description"
             className="textarea textarea-bordered w-full"
           />
@@ -104,10 +105,10 @@ const AddTask = () => {
             <p className="text-sm text-red-500">Message is required!</p>
           )}
         </div>
-        <button className="btn btn-accent w-full">Add Task</button>
+        <button className="btn btn-accent w-full">Update Task</button>
       </form>
     </div>
   );
 };
 
-export default AddTask;
+export default EditTask;

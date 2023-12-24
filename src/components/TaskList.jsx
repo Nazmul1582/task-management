@@ -1,5 +1,6 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const TaskList = ({ title, tasks }) => {
   const handleDelete = async(id) => {
@@ -31,7 +32,7 @@ const TaskList = ({ title, tasks }) => {
           <p className="text-xs">{task?.message}</p>
           <div className="flex flex-col sm:flex-row gap-2 mt-3 mb-2">
             <p className="text-sm">Deadline: {task?.deadline}</p>
-            <button className="btn btn-xs btn-warning">Edit</button>
+            <Link to={`/dashboard/edit-task/${task._id}`} className="btn btn-xs btn-warning">Edit</Link>
             <button onClick={() => handleDelete(task._id)} className="btn btn-xs btn-error">Delete</button>
           </div>
         </div>

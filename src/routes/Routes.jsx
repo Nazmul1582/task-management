@@ -7,6 +7,9 @@ import Register from "../pages/Register";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
 import PrivateRoute from "./PrivateRoute";
+import AddTask from "../components/AddTask";
+import EditTask from "../components/EditTask";
+import AllTasks from "../components/AllTasks";
 
 const router = createBrowserRouter([
     {
@@ -38,6 +41,21 @@ const router = createBrowserRouter([
     {
         path: "dashboard",
         element: <PrivateRoute><Dashboard /></PrivateRoute>,
+        children: ([
+            {
+                path: "/dashboard",
+                element: <AddTask />
+            },
+            {
+                path: "all-tasks",
+                element: <AllTasks />
+            },
+            {
+                path: "edit-task/:id",
+                element: <EditTask />,
+                loader: ({params}) => fetch(`http://localhost:5000/tasks/${params.id}`)
+            }
+        ])
     }
 ])
 
