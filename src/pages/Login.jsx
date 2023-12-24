@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const Login = () => {
-  const { login } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
   const {
     register,
@@ -30,6 +30,18 @@ const Login = () => {
         toast.error(error.message);
       });
   };
+
+  const handleSocialLogin = (social) => {
+    social()
+      .then(() => {
+        toast.success("Login with google has been successfull")
+        navigate('/dashboard')
+      })
+      .catch(error => {
+        toast.error(error.message)
+      })
+  }
+  
   return (
     <div className="hero min-h-screen bg-base-100 py-10">
       <div className="hero-content flex-col">
@@ -81,7 +93,7 @@ const Login = () => {
             </div>
             <div className="divider">OR</div>
             <div className="form-control">
-              <button className="btn btn-accent bg-white hover:bg-white hover:shadow-accent/30 hover:shadow-lg mb-5">
+              <button onClick={() => handleSocialLogin(loginWithGoogle) } className="btn btn-accent bg-white hover:bg-white hover:shadow-accent/30 hover:shadow-lg mb-5">
                 <img className="w-10" src={googleImage} alt="google logo" />
                 Sign In with Google
               </button>
