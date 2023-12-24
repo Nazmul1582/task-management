@@ -1,6 +1,9 @@
+import { Link } from "react-router-dom";
 import image from "../assets/task-management.jpg";
+import useAuth from "../hooks/useAuth";
 
 const Banner = () => {
+  const { user } = useAuth()
   return (
       <div className="hero h-[calc(100vh-theme(space.16))]">
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 justify-center items-center">
@@ -13,7 +16,7 @@ const Banner = () => {
               all-in-one solution for seamless task organization, collaboration,
               and productivity. Experience a new era of efficiency today.
             </p>
-            <button className="btn btn-accent">Let&apos;s Explore</button>
+            <Link to={user ? "/dashboard" : "/login"} className="btn btn-accent">Let&apos;s Explore</Link>
           </div>
           <img src={image} className="rounded-lg" />
         </div>
