@@ -1,15 +1,36 @@
 import { useForm } from "react-hook-form";
+import useAuth from "../hooks/useAuth";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const AddTask = () => {
+  const { user } = useAuth();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
-    reset();
+  const onSubmit = async (data) => {
+    const newTask = {
+      email: user.email,
+      title: data.title,
+      deadline: data.deadline,
+      priority: data.priority,
+      message: data.message,
+      status: "todo",
+    };
+    try {
+      const res = await axios.post("http://localhost:5000/tasks", newTask);
+      reset();
+
+      if (res.data.insertedId) {
+        toast.success("Task added successfully");
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -51,7 +72,7 @@ const AddTask = () => {
           <div className="from-control flex-grow">
             <label className="label">
               <span className="label-text">Priority</span>
-              </label>
+            </label>
             <select
               {...register("priority", { required: true })}
               defaultValue="default"
