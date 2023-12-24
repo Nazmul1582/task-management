@@ -4,7 +4,7 @@ import TaskList from "../components/TaskList";
 import useAuth from "../hooks/useAuth";
 
 const Dashboard = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const date = new Date();
   const today = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
 
@@ -37,7 +37,7 @@ const Dashboard = () => {
               <Link to="/contact">Contact</Link>
             </li>
           </ul>
-          <button className="btn btn-accent w-full">Logout</button>
+          <Link to="/login" onClick={logout} className="btn btn-accent w-full">Logout</Link>
         </div>
 
         <div className="bg-gray-100 py-3 px-5 overflow-x-scroll">
