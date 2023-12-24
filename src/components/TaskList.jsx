@@ -9,7 +9,7 @@ const TaskList = ({ title }) => {
             <div className="badge badge-secondary">high</div>
           </div>
           <p className="text-xs">This is the first task of this project</p>
-          <div className="flex gap-2 mt-3 mb-2">
+          <div className="flex flex-col sm:flex-row gap-2 mt-3 mb-2">
             <p className="text-sm">Deadline: 25-12-23</p>
             <button className="btn btn-xs btn-warning">Edit</button>
             <button className="btn btn-xs btn-error">Delete</button>
