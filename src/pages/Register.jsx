@@ -2,22 +2,45 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
+import axios from "axios";
+
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
 
 const Register = () => {
-  const { createUser } = useAuth();
+  const { createUser, updateUser } = useAuth();
   const {register, formState: { errors }, handleSubmit} = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    const { email, password } = data;
-    createUser(email, password)
-      .then(res => {
-        console.log("createUser", res);
-        toast.success("User has created successfully.")
-      })
-      .catch(error => {
-        toast.error(error.message)
-      })
+  const onSubmit = async(data) => {
+    const { name, email, password, image } = data;
+
+    // upload image in the imgbb
+    const imageFile = {image: image[0]}
+    const res = await axios.post(image_hosting_api, imageFile, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    });
+
+    if(res.data.success){
+      const photo = res.data.data.display_url
+
+      // create user
+      createUser(email, password)
+        .then(() => {
+          // update user
+          updateUser(name, photo)
+          .then(() => {
+            toast.success("User has created and profile updated successfully.")
+          })
+          .catch(error => {
+            toast.error(error.message)
+          })
+        })
+        .catch(error => {
+          toast.error(error.message)
+        })
+    }
   }
     return (
         <section className="hero min-h-screen bg-base-100 py-10">
