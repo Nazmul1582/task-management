@@ -1,12 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import AddTask from "../components/AddTask";
 import TaskList from "../components/TaskList";
 import useAuth from "../hooks/useAuth";
 
 const Dashboard = () => {
+  const tasks = useLoaderData();
   const { user, logout } = useAuth();
   const date = new Date();
   const today = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+
+  const todo = tasks.filter((task) => task.status === "todo");
+  const ongoing = tasks.filter((task) => task.status === "ongoing");
+  const completed = tasks.filter((task) => task.status === "completed");
 
   return (
     <section>
@@ -16,11 +21,11 @@ const Dashboard = () => {
             <div className="flex flex-col md:flex-row items-center gap-3">
               <div className="avatar">
                 <div className="w-10 rounded-full ring ring-accent ring-offset-base-100 ring-offset-2">
-                  <img src={user?.photoURL} alt="user image" />
+                  <img src={user.photoURL} alt="user image" />
                 </div>
               </div>
               <div>
-                <h4 className="font-semibold">{user?.displayName}</h4>
+                <h4 className="font-semibold">{user.displayName}</h4>
                 <p>{today}</p>
               </div>
             </div>
@@ -37,15 +42,17 @@ const Dashboard = () => {
               <Link to="/contact">Contact</Link>
             </li>
           </ul>
-          <Link to="/login" onClick={logout} className="btn btn-accent w-full">Logout</Link>
+          <Link to="/login" onClick={logout} className="btn btn-accent w-full">
+            Logout
+          </Link>
         </div>
 
         <div className="bg-gray-100 py-3 px-5 overflow-x-scroll">
           <AddTask />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-10">
-            <TaskList title="To Do List" />
-            <TaskList title="Ongoing List" />
-            <TaskList title="Completed List" />
+            <TaskList title="To Do List" tasks={todo} />
+            <TaskList title="Ongoing List" tasks={ongoing} />
+            <TaskList title="Completed List" tasks={completed} />
           </div>
         </div>
       </div>

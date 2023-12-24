@@ -1,9 +1,25 @@
-const TaskList = ({ title }) => {
+const TaskList = ({ title, tasks }) => {
   return (
     <div className="border rounded-lg shadow-xl p-5">
       <h2 className="text-center font-bold text-3xl mb-6">{title}</h2>
       <div className="flex flex-col gap-3">
-        <div className="p-2 rounded-lg shadow-lg bg-white">
+        {
+          tasks?.map(task => (
+          <div key={task._id} className="p-2 rounded-lg shadow-lg bg-white">
+          <div className="flex justify-between">
+            <h4 className="font-semibold mb-2">{task?.title}</h4>
+            <div className="badge badge-secondary">{task?.priority}</div>
+          </div>
+          <p className="text-xs">{task?.message}</p>
+          <div className="flex flex-col sm:flex-row gap-2 mt-3 mb-2">
+            <p className="text-sm">Deadline: {task?.deadline}</p>
+            <button className="btn btn-xs btn-warning">Edit</button>
+            <button className="btn btn-xs btn-error">Delete</button>
+          </div>
+        </div>
+          ))
+        }
+        {/* <div className="p-2 rounded-lg shadow-lg bg-white">
           <div className="flex justify-between">
             <h4 className="font-semibold mb-2">Task no. 1</h4>
             <div className="badge badge-secondary">high</div>
@@ -38,7 +54,8 @@ const TaskList = ({ title }) => {
             <button className="btn btn-xs btn-warning">Edit</button>
             <button className="btn btn-xs btn-error">Delete</button>
           </div>
-        </div>
+        </div> */}
+
       </div>
     </div>
   );
