@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const navLinks = (
     <>
       <li>
@@ -52,23 +52,23 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navLinks}</ul>
         </div>
-        <div className="navbar-end">
+        <div className="navbar-end gap-2">
         {user ? (
             <>
               <div className="flex items-center gap-1">
                 <p className="font-bold hidden md:block">{user.displayName}</p>
                 <img className="w-12 h-12 rounded-full border-2 border-accent" src={user.photoURL} alt="user image" />
               </div>
-              <Link to="/sign-in" className="btn btn-accent ml-1">
+              <Link to="/login" onClick={logout} className="btn btn-accent">
                 Logout
               </Link>
             </>
           ) : (
             <>
-              <Link to="/sign-in" className="btn btn-accent btn-outline">
+              <Link to="/login" className="btn btn-accent btn-outline">
                 Login
               </Link>
-              <Link to="/signup" className="btn btn-accent hidden md:flex">
+              <Link to="/register" className="btn btn-accent hidden md:flex">
                 Register
               </Link>
             </>
