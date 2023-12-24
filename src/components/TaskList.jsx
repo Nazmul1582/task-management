@@ -1,4 +1,22 @@
+import axios from "axios";
+import toast from "react-hot-toast";
+
 const TaskList = ({ title, tasks }) => {
+  const handleDelete = async(id) => {
+    try{
+      const res = await axios.delete(`http://localhost:5000/tasks/${id}`)
+      console.log(res.data);
+      if(res.data.deletedCount > 0){
+        toast.success("Task deleted successfully!")
+      }
+    }
+    catch (error) {
+      console.log(error);
+      toast.error(error.message)
+    }
+    
+  }
+
   return (
     <div className="border rounded-lg shadow-xl p-5">
       <h2 className="text-center font-bold text-3xl mb-6">{title}</h2>
@@ -14,48 +32,11 @@ const TaskList = ({ title, tasks }) => {
           <div className="flex flex-col sm:flex-row gap-2 mt-3 mb-2">
             <p className="text-sm">Deadline: {task?.deadline}</p>
             <button className="btn btn-xs btn-warning">Edit</button>
-            <button className="btn btn-xs btn-error">Delete</button>
+            <button onClick={() => handleDelete(task._id)} className="btn btn-xs btn-error">Delete</button>
           </div>
         </div>
           ))
         }
-        {/* <div className="p-2 rounded-lg shadow-lg bg-white">
-          <div className="flex justify-between">
-            <h4 className="font-semibold mb-2">Task no. 1</h4>
-            <div className="badge badge-secondary">high</div>
-          </div>
-          <p className="text-xs">This is the first task of this project</p>
-          <div className="flex flex-col sm:flex-row gap-2 mt-3 mb-2">
-            <p className="text-sm">Deadline: 25-12-23</p>
-            <button className="btn btn-xs btn-warning">Edit</button>
-            <button className="btn btn-xs btn-error">Delete</button>
-          </div>
-        </div>
-        <div className="p-2 rounded-lg shadow-lg bg-white">
-          <div className="flex justify-between">
-            <h4 className="font-semibold mb-2">Task no. 2</h4>
-            <div className="badge badge-primary">moderate</div>
-          </div>
-          <p className="text-xs">This is the second task of this project</p>
-          <div className="flex gap-2 mt-3 mb-2">
-            <p className="text-sm">Deadline: 25-12-23</p>
-            <button className="btn btn-xs btn-warning">Edit</button>
-            <button className="btn btn-xs btn-error">Delete</button>
-          </div>
-        </div>
-        <div className="p-2 rounded-lg shadow-lg bg-white">
-          <div className="flex justify-between">
-            <h4 className="font-semibold mb-2">Task no. 3</h4>
-            <div className="badge badge-info">low</div>
-          </div>
-          <p className="text-xs">This is the Third task of this project</p>
-          <div className="flex gap-2 mt-3 mb-2">
-            <p className="text-sm">Deadline: 25-12-23</p>
-            <button className="btn btn-xs btn-warning">Edit</button>
-            <button className="btn btn-xs btn-error">Delete</button>
-          </div>
-        </div> */}
-
       </div>
     </div>
   );
