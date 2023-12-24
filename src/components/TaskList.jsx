@@ -6,7 +6,6 @@ const TaskList = ({ title, tasks }) => {
   const handleDelete = async(id) => {
     try{
       const res = await axios.delete(`http://localhost:5000/tasks/${id}`)
-      console.log(res.data);
       if(res.data.deletedCount > 0){
         toast.success("Task deleted successfully!")
       }

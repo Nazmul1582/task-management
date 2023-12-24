@@ -1,16 +1,15 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 
 const EditTask = () => {
-    const task = useLoaderData();
-    console.log(task);
+  const task = useLoaderData();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm();
   const onSubmit = async (data) => {
     const updatedTask = {
@@ -20,8 +19,11 @@ const EditTask = () => {
       message: data.message,
     };
     try {
-      const res = await axios.put("http://localhost:5000/tasks", updatedTask);
-      reset();
+      const res = await axios.put(
+        `http://localhost:5000/tasks/${task._id}`,
+        updatedTask
+      );
+      navigate("/dashboard/all-tasks");
 
       if (res.data.modifiedCount > 0) {
         toast.success("Task added successfully");
