@@ -22,7 +22,7 @@ const TaskList = ({ title, tasks }) => {
       <h2 className="text-center font-bold text-3xl mb-6">{title}</h2>
       <div className="flex flex-col gap-3">
         {
-          tasks?.map(task => (
+          tasks.length === 0 ? <div className="text-center text-gray-500">No task available</div> : tasks?.map(task => (
           <div key={task._id} className="p-2 rounded-lg shadow-lg bg-white">
           <div className="flex justify-between">
             <h4 className="font-semibold mb-2">{task?.title}</h4>

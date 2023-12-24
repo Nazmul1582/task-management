@@ -26,7 +26,7 @@ const EditTask = () => {
       navigate("/dashboard/all-tasks");
 
       if (res.data.modifiedCount > 0) {
-        toast.success("Task added successfully");
+        toast.success("Task updated successfully");
       }
     } catch (error) {
       toast.error(error.message);
