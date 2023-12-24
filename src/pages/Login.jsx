@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import googleImage from "../assets/google.png";
 import githubImage from "../assets/github-logo.png";
 import useAuth from "../hooks/useAuth";
@@ -7,10 +7,12 @@ import toast from "react-hot-toast";
 
 const Login = () => {
   const { login } = useAuth();
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm();
 
   const onSubmit = async (data) => {
@@ -19,9 +21,12 @@ const Login = () => {
     // login user
     login(email, password)
       .then(() => {
+        reset();
         toast.success("User has loggin in successfully.");
+        navigate("/dashboard")
       })
       .catch((error) => {
+        reset();
         toast.error(error.message);
       });
   };

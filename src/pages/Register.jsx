@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -9,7 +9,8 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 
 const Register = () => {
   const { createUser, updateUser } = useAuth();
-  const {register, formState: { errors }, handleSubmit} = useForm();
+  const {register, formState: { errors }, handleSubmit, reset} = useForm();
+  const navigate = useNavigate()
 
   const onSubmit = async(data) => {
     const { name, email, password, image } = data;
@@ -31,13 +32,16 @@ const Register = () => {
           // update user
           updateUser(name, photo)
           .then(() => {
+            reset();
             toast.success("User has created and profile updated successfully.")
+            navigate("/dashboard")
           })
           .catch(error => {
             toast.error(error.message)
           })
         })
         .catch(error => {
+          reset();
           toast.error(error.message)
         })
     }
