@@ -7,7 +7,7 @@ const useTasks = () => {
     const { user } = useAuth();
 
     useEffect(() => {
-        fetch(`http://localhost:5000/tasks?email=${user.email}`)
+        fetch(`https://pro-task-manager-server.vercel.app/tasks?email=${user.email}`)
           .then((res) => res.json())
           .then((data) => {
             setTasks(data);

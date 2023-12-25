@@ -20,7 +20,7 @@ const EditTask = () => {
     };
     try {
       const res = await axios.put(
-        `http://localhost:5000/tasks/${task._id}`,
+        `https://pro-task-manager-server.vercel.app/tasks/${task._id}`,
         updatedTask
       );
       navigate("/dashboard/all-tasks");

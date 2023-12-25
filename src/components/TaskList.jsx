@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const TaskList = ({ title, tasks }) => {
   const handleDelete = async(id) => {
     try{
-      const res = await axios.delete(`http://localhost:5000/tasks/${id}`)
+      const res = await axios.delete(`https://pro-task-manager-server.vercel.app/tasks/${id}`)
       if(res.data.deletedCount > 0){
         toast.success("Task deleted successfully!")
       }
@@ -26,7 +26,7 @@ const TaskList = ({ title, tasks }) => {
           <div key={task._id} className="p-2 rounded-lg shadow-lg bg-white">
           <div className="flex justify-between">
             <h4 className="font-semibold mb-2">{task?.title}</h4>
-            <div className="badge badge-secondary">{task?.priority}</div>
+            <div className={`badge ${task?.priority === "low" ? "badge-info" : task?.priority === "moderate" ? "badge-primary" : "badge-secondary"}`}>{task?.priority}</div>
           </div>
           <p className="text-xs">{task?.message}</p>
           <div className="flex flex-col sm:flex-row gap-2 mt-3 mb-2">
